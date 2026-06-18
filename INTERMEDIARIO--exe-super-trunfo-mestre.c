@@ -8,7 +8,7 @@ int main() {
     setlocale(LC_ALL, "Portuguese");
     srand(time(0));
 
-   
+    // Lista de países pra sortear
     char paises[][30] = {
         "Afeganistão", "África do Sul", "Albânia", "Alemanha", "Andorra",
         "Angola", "Antígua e Barbuda", "Arábia Saudita", "Argélia", "Argentina",
@@ -100,24 +100,28 @@ int main() {
         }
     } else {
         printf("Opção inválida! O jogo foi encerrado.\n");
-        return 1; // Interrompe o programa devido ao erro de digitação [1]
+        return 1;
     }
 
-    // MENU 2: Montagem dinâmica com contador
+    // MENU 2: Exibição Fixa via IF-ELSE baseada na Opção 1
     printf("\n=== MENU: ESCOLHA O SEGUNDO ATRIBUTO ===\n");
-    int contadorOpcao = 1;
-    if (opcao1 != 1) { printf("%d. População\n", contadorOpcao); contadorOpcao++; }
-    if (opcao1 != 2) { printf("%d. Área\n", contadorOpcao); contadorOpcao++; }
-    if (opcao1 != 3) { printf("%d. PIB\n", contadorOpcao); contadorOpcao++; }
-    if (opcao1 != 4) { printf("%d. Pontos Turísticos\n", contadorOpcao); contadorOpcao++; }
-    if (opcao1 != 5) { printf("%d. Densidade Demográfica\n", contadorOpcao); contadorOpcao++; }
+    if (opcao1 == 1) {
+        printf("1. Área\n2. PIB\n3. Pontos Turísticos\n4. Densidade Demográfica\n");
+    } else if (opcao1 == 2) {
+        printf("1. População\n2. PIB\n3. Pontos Turísticos\n4. Densidade Demográfica\n");
+    } else if (opcao1 == 3) {
+        printf("1. População\n2. Área\n3. Pontos Turísticos\n4. Densidade Demográfica\n");
+    } else if (opcao1 == 4) {
+        printf("1. População\n2. Área\n3. PIB\n4. Densidade Demográfica\n");
+    } else {
+        printf("1. População\n2. Área\n3. PIB\n4. Pontos Turísticos\n");
+    }
     
     printf("Escolha uma opção (1-4): ");
     scanf("%d", &opcao2Dinamica);
 
     // Validação da segunda opção com IF-ELSE e mapeador com operador ternário
     if (opcao2Dinamica >= 1 && opcao2Dinamica <= 4) {
-        // Operador ternário substitui o mapeamento matemático sem usar repetições
         opcao2Real = (opcao2Dinamica < opcao1) ? opcao2Dinamica : opcao2Dinamica + 1;
 
         switch (opcao2Real) {
@@ -129,7 +133,7 @@ int main() {
         }
     } else {
         printf("Opção inválida! O jogo foi encerrado.\n");
-        return 1; // Interrompe o programa devido ao erro de digitação [1]
+        return 1;
     }
 
     // Cálculo das Somas
