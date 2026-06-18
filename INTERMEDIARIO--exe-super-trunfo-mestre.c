@@ -8,7 +8,7 @@ int main() {
     setlocale(LC_ALL, "Portuguese");
     srand(time(0));
 
-    // Lista de países pra sortear
+   
     char paises[][30] = {
         "Afeganistão", "África do Sul", "Albânia", "Alemanha", "Andorra",
         "Angola", "Antígua e Barbuda", "Arábia Saudita", "Argélia", "Argentina",
@@ -70,10 +70,10 @@ int main() {
     strcpy(nome2, paises[indiceSorteado]);
 
     // Gera valores aleatórios pra carta 2
-    populacao2 = (long long)(rand() % 7000000000 + 1000000); // 1M a 7B
-    area2 = (double)(rand() % 90000000 + 100000); // 100k a 9.1M km²
-    pib2 = (double)(rand() % 5000 + 50); // 50 a 5050 bilhões
-    pontos2 = rand() % 500 + 1; // 1 a 500 pontos
+    populacao2 = (long long)(rand() % 7000000000 + 1000000); 
+    area2 = (double)(rand() % 90000000 + 100000); 
+    pib2 = (double)(rand() % 5000 + 50); 
+    pontos2 = rand() % 500 + 1; 
     densidade2 = (double)populacao2 / area2;
 
     printf("\n=== CARTA ADVERSÁRIA GERADA ===\n");
@@ -84,62 +84,52 @@ int main() {
     printf("Pontos turísticos: %d\n", pontos2);
     printf("Densidade demográfica: %.2lf hab/km²\n", densidade2);
 
-    // MENU 1: Escolha do Primeiro Atributo
-    do {
-        printf("\n=== MENU: ESCOLHA O PRIMEIRO ATRIBUTO ===\n");
-        printf("1. População\n");
-        printf("2. Área\n");
-        printf("3. PIB\n");
-        printf("4. Pontos Turísticos\n");
-        printf("5. Densidade Demográfica\n");
-        printf("Escolha uma opção (1-5): ");
-        scanf("%d", &opcao1);
-        if (opcao1 < 1 || opcao1 > 5) {
-            printf("Opção inválida! Tente novamente.\n");
-        }
-    } while (opcao1 < 1 || opcao1 > 5);
+    // MENU 1: Escolha com validação por IF-ELSE
+    printf("\n=== MENU: ESCOLHA O PRIMEIRO ATRIBUTO ===\n");
+    printf("1. População\n2. Área\n3. PIB\n4. Pontos Turísticos\n5. Densidade Demográfica\n");
+    printf("Escolha uma opção (1-5): ");
+    scanf("%d", &opcao1);
 
-    switch (opcao1) {
-        case 1: strcpy(nomeAtributo1, "População"); v1_attr1 = populacao1; v2_attr1 = populacao2; break;
-        case 2: strcpy(nomeAtributo1, "Área"); v1_attr1 = area1; v2_attr1 = area2; break;
-        case 3: strcpy(nomeAtributo1, "PIB"); v1_attr1 = pib1; v2_attr1 = pib2; break;
-        case 4: strcpy(nomeAtributo1, "Pontos Turísticos"); v1_attr1 = pontos1; v2_attr1 = pontos2; break;
-        case 5: strcpy(nomeAtributo1, "Densidade Demográfica"); v1_attr1 = densidade1; v2_attr1 = densidade2; break;
+    if (opcao1 >= 1 && opcao1 <= 5) {
+        switch (opcao1) {
+            case 1: strcpy(nomeAtributo1, "População"); v1_attr1 = populacao1; v2_attr1 = populacao2; break;
+            case 2: strcpy(nomeAtributo1, "Área"); v1_attr1 = area1; v2_attr1 = area2; break;
+            case 3: strcpy(nomeAtributo1, "PIB"); v1_attr1 = pib1; v2_attr1 = pib2; break;
+            case 4: strcpy(nomeAtributo1, "Pontos Turísticos"); v1_attr1 = pontos1; v2_attr1 = pontos2; break;
+            case 5: strcpy(nomeAtributo1, "Densidade Demográfica"); v1_attr1 = densidade1; v2_attr1 = densidade2; break;
+        }
+    } else {
+        printf("Opção inválida! O jogo foi encerrado.\n");
+        return 1; // Interrompe o programa devido ao erro de digitação [1]
     }
 
-    // MENU 2: Escolha do Segundo Atributo (Dinâmico)
-    do {
-        printf("\n=== MENU: ESCOLHA O SEGUNDO ATRIBUTO ===\n");
-        int contadorOpcao = 1;
-        
-        if (opcao1 != 1) { printf("%d. População\n", contadorOpcao); contadorOpcao++; }
-        if (opcao1 != 2) { printf("%d. Área\n", contadorOpcao); contadorOpcao++; }
-        if (opcao1 != 3) { printf("%d. PIB\n", contadorOpcao); contadorOpcao++; }
-        if (opcao1 != 4) { printf("%d. Pontos Turísticos\n", contadorOpcao); contadorOpcao++; }
-        if (opcao1 != 5) { printf("%d. Densidade Demográfica\n", contadorOpcao); contadorOpcao++; }
-        
-        printf("Escolha uma opção (1-4): ");
-        scanf("%d", &opcao2Dinamica);
-        
-        if (opcao2Dinamica < 1 || opcao2Dinamica > 4) {
-            printf("Opção inválida! Tente novamente.\n");
-            opcao2Real = -1;
-            continue;
-        }
+    // MENU 2: Montagem dinâmica com contador
+    printf("\n=== MENU: ESCOLHA O SEGUNDO ATRIBUTO ===\n");
+    int contadorOpcao = 1;
+    if (opcao1 != 1) { printf("%d. População\n", contadorOpcao); contadorOpcao++; }
+    if (opcao1 != 2) { printf("%d. Área\n", contadorOpcao); contadorOpcao++; }
+    if (opcao1 != 3) { printf("%d. PIB\n", contadorOpcao); contadorOpcao++; }
+    if (opcao1 != 4) { printf("%d. Pontos Turísticos\n", contadorOpcao); contadorOpcao++; }
+    if (opcao1 != 5) { printf("%d. Densidade Demográfica\n", contadorOpcao); contadorOpcao++; }
+    
+    printf("Escolha uma opção (1-4): ");
+    scanf("%d", &opcao2Dinamica);
 
-        // Lógica Matemática sem FOR para mapear a opção dinâmica na opção real absoluta
-        // Se a opção digitada for menor do que a escolhida no menu 1, ela mantém o mesmo ID.
-        // Se for igual ou maior, ela pula 1 número à frente para compensar a ausência do atributo retirado.
+    // Validação da segunda opção com IF-ELSE e mapeador com operador ternário
+    if (opcao2Dinamica >= 1 && opcao2Dinamica <= 4) {
+        // Operador ternário substitui o mapeamento matemático sem usar repetições
         opcao2Real = (opcao2Dinamica < opcao1) ? opcao2Dinamica : opcao2Dinamica + 1;
 
-    } while (opcao2Real < 1 || opcao2Real > 5);
-
-    switch (opcao2Real) {
-        case 1: strcpy(nomeAtributo2, "População"); v1_attr2 = populacao1; v2_attr2 = populacao2; break;
-        case 2: strcpy(nomeAtributo2, "Área"); v1_attr2 = area1; v2_attr2 = area2; break;
-        case 3: strcpy(nomeAtributo2, "PIB"); v1_attr2 = pib1; v2_attr2 = pib2; break;
-        case 4: strcpy(nomeAtributo2, "Pontos Turísticos"); v1_attr2 = pontos1; v2_attr2 = pontos2; break;
-        case 5: strcpy(nomeAtributo2, "Densidade Demográfica"); v1_attr2 = densidade1; v2_attr2 = densidade2; break;
+        switch (opcao2Real) {
+            case 1: strcpy(nomeAtributo2, "População"); v1_attr2 = populacao1; v2_attr2 = populacao2; break;
+            case 2: strcpy(nomeAtributo2, "Área"); v1_attr2 = area1; v2_attr2 = area2; break;
+            case 3: strcpy(nomeAtributo2, "PIB"); v1_attr2 = pib1; v2_attr2 = pib2; break;
+            case 4: strcpy(nomeAtributo2, "Pontos Turísticos"); v1_attr2 = pontos1; v2_attr2 = pontos2; break;
+            case 5: strcpy(nomeAtributo2, "Densidade Demográfica"); v1_attr2 = densidade1; v2_attr2 = densidade2; break;
+        }
+    } else {
+        printf("Opção inválida! O jogo foi encerrado.\n");
+        return 1; // Interrompe o programa devido ao erro de digitação [1]
     }
 
     // Cálculo das Somas
@@ -153,7 +143,7 @@ int main() {
     printf("Países na disputa: %s vs %s\n", nome1, nome2);
     printf("--------------------------------------------------\n");
     
-    // Comparação do Atributo 1 usando Operador Ternário
+    // Comparação do Atributo 1
     printf("Atributo 1: %s\n", nomeAtributo1);
     printf(" - %s: %.2lf\n", nome1, v1_attr1);
     printf(" - %s: %.2lf\n", nome2, v2_attr1);
@@ -166,7 +156,7 @@ int main() {
     }
     printf("--------------------------------------------------\n");
 
-    // Comparação do Atributo 2 usando Operador Ternário
+    // Comparação do Atributo 2
     printf("Atributo 2: %s\n", nomeAtributo2);
     printf(" - %s: %.2lf\n", nome1, v1_attr2);
     printf(" - %s: %.2lf\n", nome2, v2_attr2);
